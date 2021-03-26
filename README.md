@@ -2,6 +2,10 @@
 
 Engine for Drups.io
 
+[![GitHub release](https://img.shields.io/github/release/drupsio/engine.svg)](https://github.com/drupsio/engine/releases)
+[![GitHub license](https://img.shields.io/github/license/drupsio/engine.svg)](https://github.com/drupsio/engine/blob/0.x/LICENSE)
+[![Documentation Status](https://readthedocs.org/projects/drupsio-engine/badge/?version=latest)](https://drupsio.rtfd.io/projects/engine/)
+
 ## Installation
 
 ## Usage
