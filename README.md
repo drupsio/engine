@@ -6,6 +6,10 @@ Engine for Drups.io
 
 ## Usage
 
+## Documentation
+
+You can see the project documentation at [drupsio.rtfd.io/projects/engine](https://drupsio.rtfd.io/projects/engine/).
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for details.
