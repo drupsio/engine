@@ -1,0 +1,4 @@
+amqp==5.0.5
+celery==5.0.5
+python-dotenv==0.16.0
+redis==3.5.3

@@ -1,1 +1,7 @@
-.idea
+.idea/
+venv/
+build/
+dist/
+drups.egg-info/
+__pycache__
+.env.local
