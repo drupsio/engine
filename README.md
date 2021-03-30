@@ -30,5 +30,5 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-Copyright © 2021 [Drups.io](https://drups.io).  
+Copyright © 2021 [Drups.io](https://drups.io).
 Released under the [MIT](LICENSE) license.

@@ -8,11 +8,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 
 def get_requirements(filename):
-    return open('requirements/' + filename).read().splitlines()
+    return open("requirements/" + filename).read().splitlines()
 
 
 def get_package_version():
-    version = re.compile(r'VERSION\s*=\s*\((.*?)\)')
+    version = re.compile(r"VERSION\s*=\s*\((.*?)\)")
     base = os.path.abspath(os.path.dirname(__file__))
     with open(os.path.join(base, "drups/__init__.py")) as file:
         for line in file:
@@ -36,7 +36,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(exclude=['tests', 'tests.*']),
+    packages=find_packages(exclude=["tests", "tests.*"]),
     python_requires=">=3.6",
-    install_requires=get_requirements('default.txt'),
+    install_requires=get_requirements("default.txt"),
 )
