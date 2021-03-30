@@ -1,7 +1,33 @@
-.idea/
-venv/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
 build/
 dist/
-drups.egg-info/
-__pycache__
+*.egg-info/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# Environments
+venv/
 .env.local
+
+# IDEs
+.idea/
