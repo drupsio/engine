@@ -11,7 +11,15 @@ Written by Temuri Takalandze <temo@drups.io>, March 2021
 
 import sys
 
-if __name__ == "__main__":
-    from app import app
+
+def main():
+    """
+    The entrypoint function.
+    """
+    from drups.app import app
 
     sys.exit(app.start())
+
+
+if __name__ == "__main__":
+    main()

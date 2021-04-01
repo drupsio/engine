@@ -11,7 +11,7 @@ Written by Temuri Takalandze <temo@drups.io>, March 2021
 
 from celery import Celery
 
-import config
+import drups.config as config
 
 app = Celery("drups")
 app.config_from_object(config)

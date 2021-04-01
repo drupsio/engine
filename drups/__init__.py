@@ -9,5 +9,8 @@ file that was distributed with this source code.
 Written by Temuri Takalandze <temo@drups.io>, March 2021
 """
 
+from drups.app import app as celery_app
+
 VERSION = (0, 1, 0)
 __version__ = ".".join(map(str, VERSION))
+__all__ = ("celery_app",)

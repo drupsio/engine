@@ -65,4 +65,9 @@ setup(
     install_requires=get_requirements("default.txt"),
     test_suite="tests",
     tests_require=get_requirements("test.txt"),
+    entry_points={
+        "console_scripts": [
+            "drups = drups.__main__:main",
+        ]
+    },
 )
