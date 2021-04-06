@@ -12,8 +12,9 @@ repos:
     rev:  pylint-3.0.0a1
     hooks:
     -   id: pylint
-        exclude: ^tests/
+        exclude: ^(tests|docs)/
 -   repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
     -   id: black
+        exclude: ^docs/
