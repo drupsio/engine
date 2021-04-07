@@ -16,6 +16,7 @@ See detailed [overview](https://drupsio.readthedocs.io/projects/engine/en/latest
 ## Requirements
 
 - `Python >= 3.6`
+- `pip`
 - `venv (recommended)`
 - `RabbitMQ Server`
 - `Redis Server`

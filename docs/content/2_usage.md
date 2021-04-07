@@ -35,6 +35,12 @@ default user in `/etc/default/drups` -> `DRUPSD_USER` and `DRUPSD_GROUP`).
 $ celery -A drups worker --loglevel=INFO -E
 ```
 
+### Using drups itself
+
+```shell
+$ drups worker --loglevel=INFO -E
+```
+
 ## Development
 
 - Create the `.env.local` file and set the environment variables:

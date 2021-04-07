@@ -3,6 +3,7 @@
 ## Requirements
 
 - `Python >= 3.6`
+- `pip`
 - `venv (recommended)`
 - `RabbitMQ Server`
 - `Redis Server`
@@ -17,4 +18,4 @@ $ pip install drups
 
 - Clone the repository: `git clone git@github.com:drupsio/engine.git`
 - Go to the project directory: `cd engine`
-- Install PIP dependencies: `pip install -r requirements/dev.txt`
+- Install pip dependencies: `pip install -r requirements/dev.txt`
