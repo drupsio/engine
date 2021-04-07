@@ -11,6 +11,8 @@ Engine for Drups.io
 [![Pytest Drups](https://github.com/drupsio/engine/actions/workflows/python-test.yml/badge.svg)](https://github.com/drupsio/engine/actions/workflows/python-test.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/drupsio/engine.svg)](https://codecov.io/gh/drupsio/engine)
 
+See detailed [overview](https://drupsio.readthedocs.io/projects/engine/en/latest/content/0_overview.html).
+
 ## Requirements
 
 - `Python >= 3.6`
@@ -24,7 +26,7 @@ Engine for Drups.io
 $ pip install drups
 ```
 
-See the [complete installation guide](https://drupsio.readthedocs.io/projects/engine/en/latest/content/installation.html).
+See the [complete installation guide](https://drupsio.readthedocs.io/projects/engine/en/latest/content/1_installation.html).
 
 ## Usage
 
@@ -32,11 +34,11 @@ See the [complete installation guide](https://drupsio.readthedocs.io/projects/en
 $ drups worker --loglevel=INFO -E
 ```
 
-See the [complete usage guide](https://drupsio.readthedocs.io/projects/engine/en/latest/content/usage.html).0
+See the [complete usage guide](https://drupsio.readthedocs.io/projects/engine/en/latest/content/usage.html).
 
 ## Documentation
 
-You can see the project documentation at [drupsio.rtfd.io/projects/engine](https://drupsio.rtfd.io/projects/engine/).
+You can see the project documentation at [drupsio.rtfd.io/projects/engine](https://drupsio.readthedocs.io/projects/engine/en/latest/content/2_usage.html).
 
 ## Changelog
 
