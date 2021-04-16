@@ -11,11 +11,7 @@ Written by Temuri Takalandze <temo@drups.io>, March 2021
 
 # pylint: disable=C0103
 
-import os
-
-from dotenv import dotenv_values
-
-config = {**dotenv_values(".env"), **dotenv_values(".env.local"), **os.environ}
+from drups.env import config
 
 broker_url = config.get("BROKER_URL", None)
 result_backend = config.get("RESULT_BACKEND", None)
@@ -26,4 +22,4 @@ task_serializer = "json"
 result_serializer = "json"
 accept_content = ["json"]
 
-del os, dotenv_values, config
+del config
