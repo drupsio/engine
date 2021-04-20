@@ -35,11 +35,11 @@ See the [complete installation guide](https://drupsio.readthedocs.io/projects/en
 $ drups worker --loglevel=INFO -E
 ```
 
-See the [complete usage guide](https://drupsio.readthedocs.io/projects/engine/en/latest/content/usage.html).
+See the [complete usage guide](https://drupsio.readthedocs.io/projects/engine/en/latest/content/2_usage.html).
 
 ## Documentation
 
-You can see the project documentation at [drupsio.rtfd.io/projects/engine](https://drupsio.readthedocs.io/projects/engine/en/latest/content/2_usage.html).
+You can see the project documentation at [drupsio.rtfd.io/projects/engine](https://drupsio.readthedocs.io/projects/engine).
 
 ## Changelog
 
