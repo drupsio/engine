@@ -21,6 +21,7 @@ os.environ["DOCKER_CERT_PATH"] = config.cert_path
 
 # Connect to Docker and log-in to the registry.
 client = docker.from_env()
+api = client.api
 auth_data = client.login(
     username=config.registry_username,
     password=config.registry_password,

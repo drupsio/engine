@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: __projectName__
+spec:
+  selector:
+    matchLabels:
+      app: __projectName__
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: __projectName__
+    spec:
+      containers:
+      - name: __projectName__
+        image: __image__
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+        - name: regcred

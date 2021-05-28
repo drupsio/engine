@@ -9,8 +9,6 @@ file that was distributed with this source code.
 Written by Temuri Takalandze <temo@drups.io>, March 2021
 """
 
-import datetime
-
 import yaml
 
 import drups.dc.instance as docker
@@ -18,60 +16,134 @@ import drups.k8s.instance as k8s
 from drups.app import app
 
 
-@app.task
-def example_deployment():
+@app.task(name="drups.deployment.start")
+def start_deployment(name, branch):
     """
-    An example deployment task.
+    Start project build.
 
-    :return: Deployment response.
+    :param name: Project name.
+    :param branch: Project git branch.
+    :return: Deployment result.
     """
 
-    registry = docker.config.registry
+    chain = build_image.s(name, branch) | deploy.s(name)
+    result = chain().get(disable_sync_subtasks=False)
 
-    # Docker.
+    return {"message": "Successfully Deployed!", "result": result}
 
-    docker.client.images.build(
-        path="/var/app/drups/hello/example", tag=f"{registry}/hello_world"
+
+@app.task(name="drups.deployment.build_image", bind=True)
+def build_image(self, name, branch):
+    """
+
+    :param self: Instance of Celery app.
+    :param name: Project name.
+    :param branch: Project git branch.
+    :return: Image tag.
+    """
+
+    name_normalized = name.replace("-", "_")
+    task_id = self.request.root_id
+    image_tag = f"{docker.config.registry}/{name_normalized}:{branch}"
+
+    # Start Docker build and send the output.
+    self.update_state(
+        task_id=task_id,
+        state="PROGRESS",
+        meta={"step": "build_image", "type": "section"},
     )
-    docker.client.images.push(repository=f"{registry}/hello_world")
+    for line in docker.api.build(
+        path="/var/app/drups/hello/example", tag=image_tag, decode=True
+    ):
+        self.update_state(
+            task_id=task_id,
+            state="PROGRESS",
+            meta={"step": "build_image", "type": "docker_api_output", "value": line},
+        )
 
-    # Kubernetes.
+    # Start Docker push and send the output.
+    self.update_state(
+        task_id=task_id,
+        state="PROGRESS",
+        meta={"step": "push_image", "type": "section"},
+    )
+    for line in docker.client.api.push(repository=image_tag, stream=True, decode=True):
+        self.update_state(
+            task_id=task_id,
+            state="PROGRESS",
+            meta={"step": "push_image", "type": "docker_api_output", "value": line},
+        )
+
+    return image_tag
+
+
+@app.task(name="drups.deployment.deploy", bind=True)
+def deploy(self, image, name):
+    """
+    Deploy project to the k8s.
+
+    :param self: Instance of Celery app.
+    :param image: Docker image to deploy.
+    :param name: Project name.
+    :return: Deployment result.
+    """
+
+    task_id = self.request.root_id
 
     # Prepare files.
-    deployment_file = open("/var/app/drups/hello/example/hello-world-deployment.yaml")
-    service_file = open("/var/app/drups/hello/example/hello-world-service.yaml")
-    deployment = yaml.safe_load(deployment_file)
-    service = yaml.safe_load(service_file)
+    deployment_content = open("/var/app/drups/hello/example/deployment.yaml").read()
+    service_content = open("/var/app/drups/hello/example/service.yaml").read()
+
+    deployment_content = deployment_content.replace("__projectName__", name).replace(
+        "__image__", image
+    )
+    service_content = service_content.replace("__projectName__", name)
+
+    deployment = yaml.safe_load(deployment_content)
+    service = yaml.safe_load(service_content)
 
     # Create Deployment.
+    self.update_state(
+        task_id=task_id,
+        state="PROGRESS",
+        meta={"step": "create_k8k_deployment", "type": "section"},
+    )
     apps_v1 = k8s.client.AppsV1Api(k8s.api_client)
     deployment_response = apps_v1.create_namespaced_deployment(
         body=deployment, namespace="default"
     )
-    k8s_deployment_result = (
-        "Deployment created. status='%s'" % deployment_response.metadata.name
+    self.update_state(
+        task_id=task_id,
+        state="PROGRESS",
+        meta={
+            "step": "create_k8k_deployment",
+            "type": "message",
+            "value": "Deployment created. name='%s'"
+            % deployment_response.metadata.name,
+        },
     )
 
     # Create Service.
+    self.update_state(
+        task_id=task_id,
+        state="PROGRESS",
+        meta={"step": "create_k8k_service", "type": "section"},
+    )
     core_v1 = k8s.client.CoreV1Api(k8s.api_client)
     service_response = core_v1.create_namespaced_service(
         body=service, namespace="default"
     )
-    k8s_service_result = "Service created. status='%s'" % service_response.metadata.name
+    self.update_state(
+        task_id=task_id,
+        state="PROGRESS",
+        meta={
+            "step": "create_k8k_service",
+            "type": "message",
+            "value": "Service created. name='%s'" % service_response.metadata.name,
+        },
+    )
 
     return {
-        "k8s_deployment_result": k8s_deployment_result,
-        "k8s_service_result": k8s_service_result,
+        "deployment_name": deployment_response.metadata.name,
+        "service_name": service_response.metadata.name,
     }
-
-
-@app.task
-def say_hello(name):
-    """
-    An example task.
-
-    :param name: Parameter Name.
-    :return: Some response.
-    """
-
-    return {"time": datetime.datetime.now().timestamp(), "message": f"Hello, {name}!"}
